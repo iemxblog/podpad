@@ -27,6 +27,7 @@ while True:
             sound.click()
             feed_number = stack.pop()
             feeds.queue_last_episode(feed_number)
+            sound.click()
         elif l == ".":
             sound.click()
             os.system("mpc toggle")
