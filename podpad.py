@@ -18,7 +18,7 @@ while True:
             cmd = stack.pop()
             if cmd == 0:
                 sound.shutdown()
-                os.system("reboot") 
+                os.system("sudo reboot") 
         elif l == "*":
             sound.click()
             stream_number = stack.pop()
@@ -40,6 +40,22 @@ while True:
             sound.click()
             os.system("mpc clear")
             stack = []
+        elif l == "+":
+            sound.click()
+            os.system("mpc volume +5")
+        elif l == "-":
+            sound.click()
+            os.system("mpc volume -5")
+        elif l == "++":
+            sound.click()
+            os.system("mpc seek +1%")
+        elif l == "--":
+            sound.click()
+            os.system("mpc seek -1%")
+        elif l == "+-" or l == "-+":
+            sound.click()
+            amount = stack.pop()
+            os.system("mpc seek {0}%".format(amount))
         else:
             sound.failure()
     except Exception as e:
