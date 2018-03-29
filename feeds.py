@@ -3,14 +3,25 @@ import sys
 import os
 import sound
 
-def queue_last_episode(feed_number):
+
+def get_last_episode_url(feed_number):
     feed = feeds[feed_number]
     episodes = feedparser.parse(feed).entries
     enclosures = [li['href'] for li in episodes[0].links if li['rel'] == 'enclosure']
     if len(enclosures) == 1:
-        os.system("mpc add \"" + enclosures[0] + "\"")
+        return enclosures[0]
     else:
         raise Exception("No enclosure for this rss feed.")
+
+
+def queue_last_episode(feed_number):
+    os.system("mpc add \"{0}\"".format(get_last_episode_url(feed_number)))
+
+def download_and_queue_last_episode(feed_number):
+    print("Deleting old podcast in /tmp")
+    os.system("rm /tmp/podcast.mp3")
+    os.system("wget {0} -O /tmp/podcast.mp3".format(get_last_episode_url(feed_number)))
+    os.system("mpc add \"file:///tmp/podcast.mp3\"")
 
 feeds = {
         0:  "http://radiofrance-podcast.net/podcast09/rss_10070.xml",   # Mauvais genres
