@@ -25,7 +25,7 @@ def download_and_queue_last_episode(feed_number):
 
 feeds = {
         0:  "http://radiofrance-podcast.net/podcast09/rss_10070.xml",   # Mauvais genres
-        1: "",
+        1:  "http://radiofrance-podcast.net/podcast09/rss_14310.xml",   # Les journaux de France Culture
         2: "",
         3: "http://feeds.feedburner.com/Odli",                          # Signé G
         4: "http://radiofrance-podcast.net/podcast09/rss_11549.xml",    # Sur les épaules de Darwin
