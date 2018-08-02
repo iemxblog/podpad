@@ -34,4 +34,5 @@ feeds = {
         7: "http://radiofrance-podcast.net/podcast09/rss_10078.xml",    # Les pieds sur terre
         8: "http://radiofrance-podcast.net/podcast09/rss_10177.xml",    # La série documentaire
         9: "http://radiofrance-podcast.net/podcast09/rss_18081.xml",    # L'expérimentale
+        10: "http://www.rtl.fr/podcast/les-grosses-tetes.xml",          # Les grosses têtes
 }
