@@ -40,6 +40,10 @@ while True:
             sound.click()
             os.system("mpc clear")
             stack = []
+        elif l == "...":
+            sound.click()
+            playlist_number = stack.pop()
+            os.system("mpc load playlist{0}".format(playlist_number)) 
         elif l == "+":
             sound.click()
             os.system("mpc volume +5")
@@ -52,6 +56,12 @@ while True:
         elif l == "--":
             sound.click()
             os.system("mpc seek -1%")
+        elif l == "---":
+            sound.click()
+            os.system("mpc prev")
+        elif l == "+++":
+            sound.click()
+            os.system("mpc next")
         elif l == "+-" or l == "-+":
             sound.click()
             amount = stack.pop()
