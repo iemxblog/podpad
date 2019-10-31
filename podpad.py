@@ -1,7 +1,9 @@
 import os
+import time
 import sound
 import feeds
 import streams
+import shutters
 
 stack = []
 
@@ -19,6 +21,30 @@ while True:
             if cmd == 0:
                 sound.shutdown()
                 os.system("sudo reboot") 
+            elif cmd == 1:
+                action = stack.pop()
+                shutter = stack.pop()
+                if action == shutters.OPEN:
+                    if shutter == shutters.DOOR:
+                        shutters.openDoor()
+                    elif shutter == shutters.BEDROOM:
+                        shutters.openBedroom()
+                    else:
+                        raise RuntimeError("No such shutter.")
+                if action == shutters.CLOSE:
+                    if shutter == shutters.DOOR:
+                        shutters.closeDoor()
+                    elif shutter == shutters.BEDROOM:
+                        shutters.closeBedroom()
+                    else:
+                        raise RuntimeError("No such shutter.")
+            elif cmd == 2:
+                shutters.openDoor()
+                time.sleep(1)
+                shutters.openBedroom()
+            else:
+                raise RuntimeError("No such command.")
+
         elif l == "*":
             sound.click()
             stream_number = stack.pop()
