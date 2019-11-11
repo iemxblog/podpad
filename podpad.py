@@ -4,16 +4,9 @@ import sound
 import feeds
 import streams
 import shutters
-import RPi.GPIO as GPIO
+import light
 
-relayPin = 4
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(relayPin, GPIO.IN)
-
-LIGHTOFF = 0
-LIGHTON = 1
-relayFlag = LIGHTOFF
+light.init()
 
 stack = []
 
@@ -53,15 +46,7 @@ while True:
                 time.sleep(1)
                 shutters.openBedroom()
             elif cmd == 3:
-                if relayFlag == LIGHTOFF:
-                    print("Turning light on")
-                    GPIO.setup(relayPin, GPIO.OUT)
-                    GPIO.output(relayPin, 0)
-                    relayFlag = LIGHTON
-                else:
-                    print("Turning light off")
-                    GPIO.setup(relayPin, GPIO.IN)
-                    relayFlag = LIGHTOFF
+                light.toggle()
             else:
                 raise RuntimeError("No such command.")
 
