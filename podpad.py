@@ -5,8 +5,14 @@ import feeds
 import streams
 import shutters
 import light
+import paho.mqtt.client as mqtt
 
-light.init()
+
+client = mqtt.Client()
+shutters.init(client)
+light.init(client)
+client.connect("iemxblog.fr", 1883, 60)
+client.loop_start()
 
 stack = []
 

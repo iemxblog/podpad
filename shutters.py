@@ -5,6 +5,14 @@ CLOSE = 0
 DOOR = 0
 BEDROOM = 1
 
+QOS = 2
+
+client = None
+
+def init(c):
+    global client
+    client = c
+
 def publishMessage(topic, payload):
     client = mqtt.Client()
     client.connect("iemxblog.fr", 1883, 60)
@@ -14,13 +22,17 @@ def publishMessage(topic, payload):
     client.disconnect()
 
 def openDoor():
-    publishMessage("/shutter/door", OPEN)
+    global client
+    client.publish("/shutter/door", OPEN, QOS)
 
 def closeDoor():
-    publishMessage("/shutter/door", CLOSE)
+    global client
+    client.publish("/shutter/door", CLOSE, QOS)
 
 def openBedroom():
-    publishMessage("/shutter/bedroom", OPEN)
+    global client
+    client.publish("/shutter/bedroom", OPEN, QOS)
 
 def closeBedroom():
-    publishMessage("/shutter/bedroom", CLOSE)
+    global client
+    client.publish("/shutter/bedroom", CLOSE, QOS)

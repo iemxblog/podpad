@@ -5,9 +5,15 @@ LIGHTOFF = 0
 LIGHTON = 1
 relayFlag = LIGHTOFF
 
-def init():
+client = None
+
+def init(c):
+    global client
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(relayPin, GPIO.IN)
+    client = c
+    client.on_connect = on_connect
+    client.on_message = on_message
 
 def toggle():
     global relayFlag
@@ -26,4 +32,13 @@ def off():
     global relayFlag
     GPIO.setup(relayPin, GPIO.IN)
     relayFlag = LIGHTOFF
+
+def on_connect(c, userData, flags, rc):
+    client.subscribe("/light/bedroom")
+
+def on_message(c, userData, msg):
+    if msg.topic == "/light/bedroom" and int(msg.payload) == 0:
+        off()
+    elif msg.topic == "/light/bedroom" and int(msg.payload) == 1:
+        on()
 
