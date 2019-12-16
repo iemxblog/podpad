@@ -7,16 +7,22 @@ import shutters
 import light
 import paho.mqtt.client as mqtt
 
+sound.startup()
 
-client = mqtt.Client()
-shutters.init(client)
-light.init(client)
-client.connect("iemxblog.fr", 1883, 60)
-client.loop_start()
+try:
+    client = mqtt.Client()
+    shutters.init(client)
+    light.init(client)
+    client.connect("iemxblog.fr", 1883, 60)
+    client.loop_start()
+except Exception as e:
+        print(e)
+        sound.failure()
+        sound.failure()
+        sound.failure()
 
 stack = []
 
-sound.startup()
 
 while True:
     l = input("> ")
@@ -106,5 +112,5 @@ while True:
         else:
             sound.failure()
     except Exception as e:
-        sound.failure()
         print(e)
+        sound.failure()
