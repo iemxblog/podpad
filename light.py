@@ -18,27 +18,30 @@ def init(c):
 def toggle():
     global relayFlag
     if relayFlag == LIGHTOFF:
-        on()
+        client.publish("/light/bedroom", payload = "1", qos = 0, retain = True)
     else:
-        off()
+        client.publish("/light/bedroom", payload = "0", qos = 0, retain = True)
 
-def on():
+def on(c):
     global relayFlag
     GPIO.setup(relayPin, GPIO.OUT)
     GPIO.output(relayPin, 0)
     relayFlag = LIGHTON
+    c.publish("/light/bedroom/status", payload = "1", qos = 0, retain = True)
 
-def off():
+
+def off(c):
     global relayFlag
     GPIO.setup(relayPin, GPIO.IN)
     relayFlag = LIGHTOFF
+    c.publish("/light/bedroom/status", payload = "0", qos = 0, retain = True)
 
 def on_connect(c, userData, flags, rc):
-    client.subscribe("/light/bedroom")
+    c.subscribe("/light/bedroom")
 
 def on_message(c, userData, msg):
     if msg.topic == "/light/bedroom" and int(msg.payload) == 0:
-        off()
+        off(c)
     elif msg.topic == "/light/bedroom" and int(msg.payload) == 1:
-        on()
+        on(c)
 
